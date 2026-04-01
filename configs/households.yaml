@@ -1,0 +1,67 @@
+archetypes:
+  - name: poor_single
+    population: 1.0
+    initial_savings: 1000
+    skills: [0.3, 0.1, 0.0, 0.0, 0.0]   # общий, розница, IT, управление, профессионал
+    consumption_basket:
+      food: 0.6
+      clothing: 0.2
+      services: 0.1
+      entertainment: 0.1
+    saving_rate: 0.02
+    transfer: 200
+  - name: poor_family
+    population: 3.0
+    initial_savings: 2000
+    skills: [0.4, 0.2, 0.0, 0.0, 0.0]
+    consumption_basket:
+      food: 0.5
+      clothing: 0.2
+      services: 0.2
+      entertainment: 0.1
+    saving_rate: 0.01
+    transfer: 400
+  - name: middle_single
+    population: 1.5
+    initial_savings: 5000
+    skills: [0.6, 0.2, 0.3, 0.1, 0.0]
+    consumption_basket:
+      food: 0.4
+      clothing: 0.2
+      services: 0.2
+      entertainment: 0.2
+    saving_rate: 0.10
+    transfer: 0
+  - name: middle_family
+    population: 4.0
+    initial_savings: 8000
+    skills: [0.6, 0.3, 0.2, 0.4, 0.1]
+    consumption_basket:
+      food: 0.4
+      clothing: 0.2
+      services: 0.2
+      entertainment: 0.2
+    saving_rate: 0.08
+    transfer: 0
+  - name: upper_middle
+    population: 2.0
+    initial_savings: 20000
+    skills: [0.8, 0.5, 0.7, 0.8, 0.9]
+    consumption_basket:
+      food: 0.3
+      clothing: 0.2
+      services: 0.3
+      entertainment: 0.2
+    saving_rate: 0.20
+    transfer: 0
+  - name: rich
+    population: 2.0
+    initial_savings: 100000
+    skills: [0.9, 0.7, 0.8, 0.9, 1.0]
+    consumption_basket:
+      food: 0.2
+      clothing: 0.2
+      services: 0.4
+      entertainment: 0.2
+    saving_rate: 0.40
+    transfer: 0
