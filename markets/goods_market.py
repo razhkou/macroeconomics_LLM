@@ -4,9 +4,9 @@ from typing import List, Dict, Any, Tuple
 
 class GoodsMarket:
     def __init__(self):
-        self.asks = defaultdict(list)
-        self.bids = defaultdict(list)
-        self.prices = {}
+        self.asks = defaultdict(list)  # good -> list of (agent_id, price, quantity)
+        self.bids = defaultdict(list)  # good -> list of (agent_id, price, quantity)
+        self.prices = {}               # good -> last price
 
     def reset(self):
         self.asks.clear()

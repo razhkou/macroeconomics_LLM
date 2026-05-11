@@ -10,17 +10,17 @@ logger = logging.getLogger(__name__)
 class Loan(pydantic.BaseModel):
     borrower_id: str
     amount: float
-    interest_rate: float          # месячная ставка
+    interest_rate: float
     remaining: float
     monthly_payment: float
 
 
 class BankState(pydantic.BaseModel):
-    cash: float                   # наличные средства (собственный капитал + депозиты)
-    deposits: float               # сумма депозитов (обязательства)
-    loans: List[Loan]             # выданные кредиты
-    interest_rate_deposit: float  # ставка по депозитам (может быть привязана к ключевой)
-    interest_rate_loan: float     # ставка по кредитам
+    cash: float
+    deposits: float
+    loans: List[Loan]
+    interest_rate_deposit: float
+    interest_rate_loan: float
     reserve_ratio: float
 
 
@@ -31,8 +31,8 @@ class BankAgent(Agent):
             cash=config.get('bank_cash', 100000),
             deposits=0,
             loans=[],
-            interest_rate_deposit=config.get('interest_rate_deposit', 0.005),   # 0.5% в месяц
-            interest_rate_loan=config.get('interest_rate_loan', 0.01),          # 1% в месяц
+            interest_rate_deposit=config.get('interest_rate_deposit', 0.005),
+            interest_rate_loan=config.get('interest_rate_loan', 0.01),
             reserve_ratio=config.get('reserve_ratio', 0.1),
         )
 
@@ -42,10 +42,8 @@ class BankAgent(Agent):
         self.state.loans = []
 
     async def step(self, observation: Dict[str, Any]) -> Dict[str, Any]:
-        # Банк может использовать ключевую ставку от правительства
         macro = observation.get('macro', {})
         key_rate = macro.get('key_interest_rate', 0.01)
-        # Простая привязка: депозитная ставка = ключевая - 0.5%, кредитная = ключевая + 1%
         self.state.interest_rate_deposit = max(0.0, key_rate - 0.005)
         self.state.interest_rate_loan = key_rate + 0.01
         return {
@@ -69,18 +67,15 @@ class BankAgent(Agent):
         return withdraw
 
     def request_loan(self, borrower_id: str, amount: float, purpose: str) -> Optional[Loan]:
-        # Проверка кредитоспособности: сумма не больше доступных средств
         max_loan = max(0, self.state.cash * 0.7)
         if amount <= 0 or amount > max_loan:
             return None
-
         monthly_rate = self.state.interest_rate_loan
         months = 12
         if monthly_rate > 0:
             monthly_payment = amount * (monthly_rate * (1 + monthly_rate) ** months) / ((1 + monthly_rate) ** months - 1)
         else:
             monthly_payment = amount / months
-
         loan = Loan(
             borrower_id=borrower_id,
             amount=amount,
@@ -104,7 +99,6 @@ class BankAgent(Agent):
         return 0.0
 
     def process_monthly_payments(self) -> Dict[str, float]:
-        """Списывает ежемесячные платежи по кредитам. Возвращает словарь borrower_id -> сумма."""
         payments = {}
         for loan in self.state.loans[:]:
             payment = min(loan.monthly_payment, loan.remaining)

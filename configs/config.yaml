@@ -1,13 +1,7 @@
-defaults:
-  - households
-  - firms
-  - macros
-
-num_episodes: 1
-episode_length: 120
-seed: 42
-save_dir: ./output
+episode_length: 12
 log_freq: 1
 plot_after: true
+save_dir: ./output
 model: "ollama/qwen3:4b"
 temperature: 0.0
+api_base: "http://localhost:11434"

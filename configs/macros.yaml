@@ -3,8 +3,8 @@ tax_profit: 0.20
 key_interest_rate: 0.01
 interest_rate_deposit: 0.005
 interest_rate_loan: 0.01
-bank_cash: 100000
+bank_cash: 1000000
 initial_budget: 0
 transfers:
-  poor_single: 200
-  poor_family: 400
+  poor_single: 2000
+  poor_family: 4000
