@@ -2,6 +2,6 @@ episode_length: 12
 log_freq: 1
 plot_after: true
 save_dir: ./output
-model: "ollama/qwen3:4b"
+model: "ollama/qwen3:32b-q4_K_M"
 temperature: 0.0
 api_base: "http://localhost:11434"
